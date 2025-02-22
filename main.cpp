@@ -30,7 +30,7 @@ Options to add a new student, delete an existing student,
 #include <ctime>
 #include <map>
 #include <iomanip>
-//array of students with detail structure
+
 
 std::string Id_creator();
 void mainscreen();
@@ -110,7 +110,7 @@ void mainscreen(){
     std::cout<<"modifier";
    case 3:
    search_print();
-    std::cout<<"deleter";
+    //std::cout<<"deleter";
    case 4:
     std::cout<<"add and delete student";
     add_delete_s();
@@ -126,6 +126,9 @@ void record_modifier(){
 };
 
 void search_print(){
+    std::cout<<"student finder";
+    
+
 
 };
 
