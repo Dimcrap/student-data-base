@@ -31,7 +31,7 @@ Options to add a new student, delete an existing student,
 #include <map>
 #include <iomanip>
 //array of students with detail structure
-//what should
+
 std::string Id_creator();
 void mainscreen();
 void print_all();
