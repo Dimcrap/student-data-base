@@ -122,12 +122,148 @@ void mainscreen(){
 }
 
 void record_modifier(){
+     std::cout<<"\t\t\t\t<<student modifying file page>>";
+     std::string fname,lname,g_pa,magor;
+     std::string ID;
+     int inp_choice;
+    std::cout<<"enter sudents ID fo modifying:";
+    getline(std::cin,ID);
+    while(id_exist(ID)!=1){
+     std::cout<<strerror(22)<<std::endl;
+    std::cout<<"enter a valid ID(enter 1 to go to leading screen):";
+    getline(std::cin,ID);
+    if(ID=="1"){
+    mainscreen();
+    break;
+    }
+    }   ;
+    std::ifstream R_file("data.txt");
+    std::string line;
+    std::string line_c;
+    if(!R_file.is_open()){
+     std::cout<<"\n data loading Error!";
+     mainscreen();
+    };
 
+    size_t pos;
+    while(R_file.good()){
+
+     getline(R_file,line);
+     pos=line.find(ID);
+     if(pos!=std::string::npos){
+          line_c=line;
+     }
+    };
+     
+    std::string student_num;
+    for (int i=1;line_c[i]!=':';i++){
+    student_num=+line_c[i];
+    }; 
+    
+    //reading required element; 
+    std::map <std::string,std::string> config;
+    std::ifstream Rfile("data.txt");
+    std::string if_lines;
+
+    while(getline(Rfile,if_lines)){ //it will every line
+     std::string key;
+     std::string value;
+     std::stringstream ss(if_lines);
+     getline(ss,key,':');
+     ss>>std::ws;
+     getline(ss,value);
+     
+     config[key]=value; //storing them
+     
+      } 
+    //std::cout<<;
+    
+    //♫☻☻☻☺☺☺☻☻☺☻☺
+    
+    std::cout<<"choose what part you want to modify:\n1.First name\n2.Last name\n3.GPA\n4.Major\n5.Mainscrean\n";
+    std::cin>>inp_choice;
+    while(inp_choice<1||inp_choice>5){
+     std::cout<<strerror(22)<<"\nenter a valid number\nchoose what part you want to modify:\n1.First name\n2.Last name\n3.GPA\n4.Major\n5.Mainscrean\n";
+     std::cin>>inp_choice;
+    };
+
+    if(inp_choice==1){
+        
+    }
+    if(inp_choice==2){
+
+    }
+    if(inp_choice==3){
+
+    }
+    if(inp_choice==4){
+
+    }
+    if(inp_choice==5){
+
+    }
 };
 
 void search_print(){
-    std::cout<<"student finder";
+    std::string ID;
+    std::cout<<"\t\t\t\t\tstudent finder\nenter student ID:";
+    getline(std::cin,ID);
     
+    while(id_exist(ID)!=1){
+     std::cout<<strerror(22)<<std::endl;
+    std::cout<<"enter a valid ID(enter 1 to go to leading screen):";
+    getline(std::cin,ID);
+    if(ID=="1"){
+    mainscreen();
+    break;
+    }
+    }   
+    
+    std::ifstream R_file("data.txt");
+    std::string line;
+    std::string line_c;
+    if(!R_file.is_open()){
+     std::cout<<"\n data loading Error!";
+     mainscreen();
+    };
+
+    size_t pos;
+    while(R_file.good()){
+
+     getline(R_file,line);
+     pos=line.find(ID);
+     if(pos!=std::string::npos){
+          line_c=line;
+     }
+    };
+     
+    std::string student_num;
+for (int i=1;line_c[i]!=':';i++){
+    student_num=+line_c[i];
+}; 
+
+std::map<std::string,std::string> configuration;
+std::ifstream the_file("data.txt");
+//the_file.open("data.txt",std::ios::out|std::ios::app);
+std::string line_2;    
+
+while(getline(the_file,line_2)){
+std::string key,value;
+std::stringstream ss(line_2);
+getline(ss,key,':');
+std::cout<<key;
+ss>>std::ws;
+getline(ss,value);
+configuration[key]=value;
+};
+std::cout<<"firstname:"<<configuration["Firstname"+student_num];
+std::cout<<"\nlastname:"<<configuration["Lastname"+student_num];
+std::cout<<"\nId:"<<ID;
+std::cout<<"\nGPA:"<<configuration["gpa"+student_num];
+std::cout<<"\nMajor:"<<configuration["major",student_num];
+
+
+
 
 
 };
@@ -173,8 +309,13 @@ void add_delete_s(){
           to_add_file<<"\nid"<<student_numbers<<":"<<id;
           to_add_file<<"\ngpa"<<student_numbers<<":"<<gpa;
           to_add_file<<"\nmajor"<<student_numbers<<":"<<major;
-          
+
+          to_add_file.close();
+          std::cout<<"student added susccesfuly"; 
+          mainscreen();
+
      }else if(input1==2){
+
 
      };
 
