@@ -1,0 +1,11 @@
+   *.o      # Object files
+        *.d      # Dependency files
+        *.exe    # Executables (Windows)
+        *.out    # Executables (Linux/macOS)
+        *.dll    # Dynamic Link Libraries (Windows)
+        *.so     # Shared Objects (Linux)
+        *.dylib  # Dynamic Libraries (macOS)
+        build/   # Common build directory
+        cmake-build-*/ # CLion specific build directories
+        *.vscode
+

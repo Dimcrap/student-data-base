@@ -22,7 +22,7 @@ Options to add a new student, delete an existing student,
 */
 
 #include <iostream>
-//#include <C:\programming\reviving files\C++\exersise p\student data base\declerations.h>
+//#include <C:\programming\C++\exersise p\student data base\data.txt>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -30,15 +30,24 @@ Options to add a new student, delete an existing student,
 #include <ctime>
 #include <map>
 #include <iomanip>
+#include <cstring>
+#include <limits>
+#include <thread>
+#include <chrono>
+#include <vector>
 
-
-std::string Id_creator();
+int student_numbers=11;
+std::string id_creator();
 void mainscreen();
 void print_all();
 void record_modifier();
 void search_print();
 void add_delete_s();
 int id_exist(std::string I_D );
+void dossier_swaper(std::string firststudentN,std::string secondstudentN);
+std::string student_number(const std::string & filename,std::string ID);
+std::map <std::string,std::string> studentdatadonor(std::string studentN);
+void loopingfile(std::vector<std::string>& all_lines,std::string field,std::string subjnumber,std::string content);
 
 struct student{
      std::string Firstname;
@@ -48,25 +57,27 @@ struct student{
      
 };
 
-int student_numbers=11;
+
+
+
 
 
 int main(){
-     srand(time(0));
-     /* requiered objects must be creted for *deleting student*,*adding detials*,editing student 
-     */
+     /*srand(time(0));
+     // requiered objects must be creted for *deleting student*,*adding detials*,editing student 
      std::ostringstream text;
      std::ofstream file_o("data.txt",std::ios::app);
      
-    
+     
      // std::cout<<"hello there";//<<std::endl;
-    mainscreen();
+     */
+     mainscreen();
+    //std::cout<<"name";
 }
 
 
 
 std::string id_creator(){
-
 std::string alphabet="QWERTYUIOPASDFGHJKLZXCVBNM";
 std::string numbers="0123456789";     
 std::string ID;
@@ -76,6 +87,7 @@ int index_n=rand() %26;
 for (int i=0;i<3;i++){
      ID+=alphabet[index_n];
      index_n=rand() %26;
+     
 };
 
 index_n=rand()%10;
@@ -88,16 +100,42 @@ for(int i=0;i<6;i++){
 return ID;
 
 
+std::cout<<"this function isn't ready";
+return "";
 };
 
 
 void print_all(){
 
+std::map <std::string,std::string> configuration;
+std::ifstream fileobj("data.txt");
+std::string line;
+
+while(getline(fileobj,line)){
+     std::string key;
+     std::string value;
+          std::stringstream myss(line);
+          getline(myss,key,':');
+          myss>>std::ws;
+          getline(myss,value);
+
+          configuration[key]=value;
+     };
+     for(int i=0;i<11;i++){
+          std::cout<<"\nFIRSTNAME:"<<configuration["Firstname"+std::to_string(i)]<<"\nLASTNAME:"<<configuration["Lastname"+std::to_string(i)];
+          std::cout<<"\nID:"<<configuration["id"+std::to_string(i)]<<"\nGPA:"<<configuration["gpa"+std::to_string(i)]<<"\nMAJOR:"<<configuration["major"+std::to_string(i)];
+          std::cout<<std::endl;
+     }
+     mainscreen();
+
+std::cout<<"this function isn't ready";
+
 };
 
 void mainscreen(){
-     int input;
-   std::cout<<"\n\n\n\t\t\t\t\t student  database\n";
+    int input; 
+     
+     std::cout<<"\n\n\n\t\t\t\t\t\t student  database\n";
    std::cout<<"\n\t\t\t\t\t 1.Reavling all sudents datas\n\t\t\t\t\t 2.Modify students records \n\t\t\t\t\t 3.Search and view Records\n\t\t\t\t\t 4.add and delete a student\n\t\t\t\t\t 5.Exits";
    std::cout<<"\n\t\t\t\t\t Choose options:[1/2/3/4/5]\n\t\t\t\t\t";
    std::cin>>input;
@@ -117,94 +155,135 @@ void mainscreen(){
     case 5:
     std::cout<<"exit";
                                                      //save the data before exit
-    exit(0);
-   }
+   //std::this_thread::sleep_for(std::chrono::milliseconds(700));
+   exit(0);
+}
 }
 
 void record_modifier(){
+     
      std::cout<<"\t\t\t\t<<student modifying file page>>";
      std::string fname,lname,g_pa,magor;
      std::string ID;
-     int inp_choice;
-    std::cout<<"enter sudents ID fo modifying:";
-    getline(std::cin,ID);
-    while(id_exist(ID)!=1){
-     std::cout<<strerror(22)<<std::endl;
-    std::cout<<"enter a valid ID(enter 1 to go to leading screen):";
-    getline(std::cin,ID);
-    if(ID=="1"){
-    mainscreen();
-    break;
-    }
-    }   ;
-    std::ifstream R_file("data.txt");
-    std::string line;
-    std::string line_c;
-    if(!R_file.is_open()){
-     std::cout<<"\n data loading Error!";
-     mainscreen();
-    };
-
-    size_t pos;
-    while(R_file.good()){
-
-     getline(R_file,line);
-     pos=line.find(ID);
-     if(pos!=std::string::npos){
-          line_c=line;
-     }
-    };
+     std::cin.ignore();
+     std::cout<<"\n enter sudents ID for modifying:";
+     getline(std::cin,ID);
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+     int catcher=id_exist(ID);
      
-    std::string student_num;
-    for (int i=1;line_c[i]!=':';i++){
-    student_num=+line_c[i];
-    }; 
+     while(id_exist(ID)!=1){
+          std::cout<<strerror(22)<<std::endl;
+          std::cout<<"enter a valid ID(enter 1 to go to leading screen):";
+          getline(std::cin,ID);
+          if(ID=="1"){
+               mainscreen();
+               break;
+          }
+     };
+     
+     std::string Snumber=student_number("data.txt",ID);
     
-    //reading required element; 
-    std::map <std::string,std::string> config;
-    std::ifstream Rfile("data.txt");
-    std::string if_lines;
+   //reading every lines from file    
+      
+     std::ifstream ifs_obj("data.txt");
+     ;
+     if(!ifs_obj){
+          std::cout<<"\n error loading files!";
+          mainscreen();
+     };
+     
+     std::vector <std::string> lines;
+     std::string line;
+          while(std::getline(ifs_obj,line)){
+               lines.push_back(line);
+          }
+     ifs_obj.close();
 
-    while(getline(Rfile,if_lines)){ //it will every line
-     std::string key;
-     std::string value;
-     std::stringstream ss(if_lines);
-     getline(ss,key,':');
-     ss>>std::ws;
-     getline(ss,value);
-     
-     config[key]=value; //storing them
-     
-      } 
-    //std::cout<<;
-    
-    //♫☻☻☻☺☺☺☻☻☺☻☺
-    
-    std::cout<<"choose what part you want to modify:\n1.First name\n2.Last name\n3.GPA\n4.Major\n5.Mainscrean\n";
+    int inp_choice;
+
+    std::cout<<"choose what part you want to modify:\n1.First name\n2.Last name\n3.GPA\n4.Major\n5.-save and go to Mainscrean\n";
     std::cin>>inp_choice;
-    while(inp_choice<1||inp_choice>5){
-     std::cout<<strerror(22)<<"\nenter a valid number\nchoose what part you want to modify:\n1.First name\n2.Last name\n3.GPA\n4.Major\n5.Mainscrean\n";
-     std::cin>>inp_choice;
-    };
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    if(inp_choice==1){
+    while(1){
+
+     while(inp_choice<1||inp_choice>5){
+     std::cout<<strerror(22)<<"\nenter a valid number\nchoose what part you want to modify:\n1.First name\n2.Last name\n3.GPA\n4.Major\n5.-save and go to Mainscrean\n";
+          std::cin>>inp_choice;
+     };
+     
+
+    if(inp_choice==1){ 
+     std::string newfirstname;
+     std::cout<<"\n\t\t\t enter your new firstname:";
+     std::getline(std::cin,newfirstname);
+      
+     if(newfirstname=="" || newfirstname==" "){
+              std::cout<<"error accured!";
+              mainscreen();
+          };
+          
+     loopingfile( lines,"Firstname", Snumber, newfirstname);
         
-    }
-    if(inp_choice==2){
-
-    }
+     };
+    if(inp_choice==2){ 
+        std::string newlastname;
+     std::cout<<"\n\t\t\t enter a new lastname:";
+     std::getline(std::cin,newlastname);
+     if(newlastname=="" || newlastname==" "){
+              std::cout<<"error accured!";
+              mainscreen();
+          };
+    
+     loopingfile( lines,"Lastname", Snumber, newlastname);
+      
+     };
     if(inp_choice==3){
-
-    }
+       std::string newgpa;
+     std::cout<<"\n\t\t\t enter a new gpa:";
+     std::getline(std::cin,newgpa);
+     if(newgpa=="" || newgpa==" "){
+              std::cout<<"error accured!";
+              mainscreen();
+          };
+    
+     loopingfile( lines,"gpa", Snumber, newgpa);
+      
+     };
     if(inp_choice==4){
+      std::string newmajor;
+     std::cout<<"\n\t\t\t enter a new major:";
+     std::getline(std::cin,newmajor);
+     if(newmajor=="" || newmajor==" "){
+              std::cout<<"error accured!";
+              mainscreen();
+          };
+    
 
-    }
-    if(inp_choice==5){
-
-    }
+     loopingfile( lines,"major", Snumber, newmajor);
+      
+    
 };
+    if(inp_choice==5){
+          std::ofstream outfile("data.txt");
+         for(const auto &line :lines){
+          outfile<<line<<"\n";
+         };
+         outfile.close();
+          std::cout<<"data editing complited";
+          mainscreen();
+     }
+
+
+    std::cout<<"edited!\nchoose what part you want to modify:\n1.First name\n2.Last name\n3.GPA\n4.Major\n5.-save and go to Mainscrean\n";
+    std::cin>>inp_choice;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+};
+}
 
 void search_print(){
+     
     std::string ID;
     std::cout<<"\t\t\t\t\tstudent finder\nenter student ID:";
     getline(std::cin,ID);
@@ -238,7 +317,7 @@ void search_print(){
     };
      
     std::string student_num;
-for (int i=1;line_c[i]!=':';i++){
+for (int i=2;line_c[i]!=':';i++){
     student_num=+line_c[i];
 }; 
 
@@ -263,14 +342,13 @@ std::cout<<"\nGPA:"<<configuration["gpa"+student_num];
 std::cout<<"\nMajor:"<<configuration["major",student_num];
 
 
-
-
-
 };
 
 void add_delete_s(){
+     
      std::cout<<"\t\t\t\t\t<<adding deleting page>>\n\n";
      std::cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n');
+     
      int input1;
 
      std::cout<<"1-adding a student.\n2-deleting a student file\n";
@@ -301,7 +379,7 @@ void add_delete_s(){
           std::cout<<"\nenter studentss major:";
           getline(std::cin,major);
           
-          //*****declaring and sving to the base */
+          //*****declaring and sving to the base 
           std::ofstream to_add_file;
           to_add_file.open("data.txt",std::ios::out|std::ios::app);
           to_add_file<<"\nFirstname"<<student_numbers<<":"<<fname;
@@ -315,20 +393,24 @@ void add_delete_s(){
           mainscreen();
 
      }else if(input1==2){
+          //finding from the base
+          std::string   s_id;
+          std::cout<<"\n\t\t\t enter the student ID:";
+          std::cin>>s_id;
+          
 
-
-     };
+     } 
 
 };
 
 int id_exist(std::string I_D){
 
-     std::map <std::string ,std::string> configuration;
-     std::ifstream infile;
+std::map <std::string ,std::string> configuration;
+std::ifstream infile;
      std::string line;
      
      infile.open("data.txt");
-
+     
      if(!infile){
           std::cout<<"error accured!";
           exit(1);
@@ -340,17 +422,146 @@ int id_exist(std::string I_D){
           getline(infile,line);
           pos=line.find(I_D);
           if(pos!=std::string::npos){
-
-               return 1;
                st=1;
-          }
-     }
+          };
+     };
      if(st==0){
-
           return 0;
-     }
+     }else{
+          return 1;
+     };
+
+//std::cout<<"this function isn't ready";    
+return 0;
+};
+
+std::string student_number(const std::string & filename,std::string ID){
+
+std::ifstream ifs_file_obj(filename);
+std::string all_lines;
+std::string snumber="";
+std::string line;
+
+if(!ifs_file_obj.is_open()){
+   std::cout<<"error finding file.\n";
+    mainscreen();
+};
+
+while(getline(ifs_file_obj,all_lines)){
+     if(all_lines.find(ID) != std::string::npos){
+        ifs_file_obj.close();
+         line=all_lines;
+     };
      
+     
+     };
+     
+     ifs_file_obj.close();
+     
+     for(int i=2;line[i]!=':';i++){
+          snumber=snumber+line[i];
+     };
+     
+     return snumber;
+    
+
+};
+
+
+
+void dossier_swaper(std::string firststudentN,std::string secondstudentN){
+     std::map <std::string,std::string> firstst=studentdatadonor(firststudentN);
+     std::map <std::string,std::string> secondst=studentdatadonor(secondstudentN);
+   
+     //read all lines from file 
+     std::ifstream inFile("data.txt");
+     std::vector <std::string> lines;
+     std::string line;
+          while(std::getline(inFile,line)){
+               lines.push_back(line);
+          }
+          inFile.close();
+
+          for(auto& line:lines){
+               if(line.find("Firstname"+firststudentN+":")==0){
+                    line="Firstname"+firststudentN+":"+secondst["Firstname"];
+               }
+               else if(line.find("Firstname"+secondstudentN+":")==0){
+                    line="Firstname"+secondstudentN+":"+firstst["Firstname"];
+               }
+                else if(line.find("Lastname"+firststudentN+":")==0){
+                    line="Lastname"+firststudentN+":"+secondst["Lastname"];
+               }
+               else if(line.find("Lastname"+secondstudentN+":")==0){
+                    line="Lastname"+secondstudentN+":"+firstst["Lastname"];
+               }
+               else if(line.find("id"+firststudentN+":")==0){
+                    line="id"+firststudentN+":"+secondst["id"];
+               }
+               else if(line.find("id"+secondstudentN+":")==0){
+                    line="id"+secondstudentN+":"+firstst["id"];
+               }
+               else if(line.find("gpa"+firststudentN+":")==0){
+                    line="gpa"+firststudentN+":"+secondst["gpa"];
+               }
+               else if(line.find("gpa"+secondstudentN+":")==0){
+                    line="gpa"+secondstudentN+":"+firstst["gpa"];
+               }
+              else if(line.find("major"+firststudentN+":")==0){
+                    line="major"+firststudentN+":"+secondst["major"];
+               }
+             else if(line.find("major"+secondstudentN+":")==0){
+                    line="major"+secondstudentN+":"+firstst["major"];
+               }
+
+          }
+
+          //write all the modified lines to the file
+          std::ofstream outfile("data.txt");
+          for(const auto& line : lines){
+          outfile<<line<<"\n";
+          }
+          outfile.close();
+};
+
+
+std::map <std::string,std::string> studentdatadonor(std::string studentN){
+     std::map <std::string,std::string> result;
+     std::map <std::string,std::string> configuration;
+     std::ifstream file("data.txt");
+     std::string line;
+
+
+     while(getline(file,line)){
+          std::string key;
+          std::string value;
+          std::stringstream ss(line);
+          getline(ss,key,':');
+          ss>>std::ws;
+          getline(ss,value);
+     
+          configuration[key]=value;
+     }
+     result["Firstname"+studentN]=configuration["Firstname"+studentN];
+     result["Lastname"+studentN]=configuration["Lastname"+studentN];
+     result["id"+studentN]=configuration["id"+studentN];
+     result["major"+studentN]=configuration["major"+studentN];
+
+     return result;
+
+};
+
+
+void loopingfile(std::vector<std::string>& all_lines,std::string field,std::string subjnumber,std::string content){
+
+     for(auto & line:all_lines){
+         if(line.find(field+subjnumber+":")==0){
+          line=field+subjnumber+":"+content;
+         }; 
+     };
 }
+
+
 
 /*
      APP FEATURES:
@@ -376,3 +587,26 @@ int id_exist(std::string I_D){
  criminal justice-------human services------economic--------social sciences----biochemisty-----
 
  */
+
+
+
+
+
+ // *********record modifier deteils: 
+ /*
+std::map <std::string,std::string> config;
+std::ifstream Rfile("data.txt");
+std::string if_lines;
+
+    while(getline(Rfile,if_lines)){ //it will loop through every line
+    std::string key;
+    std::string value;
+    std::stringstream ss(if_lines);
+    getline(ss,key,':');
+    ss>>std::ws;
+    getline(ss,value);
+
+    config[key]=value; //storing them
+    };
+      R_file.close();
+*/

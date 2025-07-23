@@ -1,12 +1,12 @@
-Firstname0 :Laylah  
-Lastname0 :Hawkins  
+Firstname0:Laylah  
+Lastname0:Hawkins  
 id0:qwe78984
-gpa0:2.5 
+gpa0:3.5
 major0:healthcare administration 
 
-Firstname1 :Esther 
-Lastname1 :Sims 
-id1:ewqw21254 
+Firstname1:Esther 
+Lastname1:Sims 
+id1:ewqw21253
 gpa1:1.75 
 major1:psychology 
 
@@ -14,7 +14,7 @@ major1:psychology
 Firstname2:Kody 
 Lastname2:Zavala 
 id2:ewqe25546 
-gpa2:4 
+gpa2:3.5
 major2:journalism 
 
 
@@ -46,7 +46,7 @@ major6:economic
 
 
 Firstname7:Yuliana 
-Lastname7:Phillips 
+Lastname7:jupits
 id7:jurrt221002105  
 gpa7:4 
 major7:social sciences 
@@ -66,8 +66,21 @@ gpa9:1.75
 major9:psychology 
 
 
-Firstname10:Jessie 
-Lastname10:Landry 
+Firstname10:jarvis
+Lastname10:landy
 id10:ttyu8788874  
-gpa10:2.5  
-major10:human services 
+gpa10:2.6
+major10:human-services
+
+Firstname11:lusaru
+Lastname11:dmuity
+id11:xfyu87op874  
+gpa11:2.5  
+major11:human services
+
+
+Firstname12:jerald
+Lastname12:davidson
+id12:HIJ948824
+gpa12:3
+major12:lawier
