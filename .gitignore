@@ -1,5 +1,5 @@
-   *.o      # Object files
-        *.d      # Dependency files
+        *.o      # Object files
+       # *.d      # Dependency files
         *.exe    # Executables (Windows)
         *.out    # Executables (Linux/macOS)
         *.dll    # Dynamic Link Libraries (Windows)

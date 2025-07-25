@@ -52,7 +52,7 @@ gpa7:4
 major7:social sciences 
 
 
-Firstname8:Ruby 
+Firstname8:Rubby
 Lastname8:Padilla 
 id8:iklv578741010  
 gpa8:3  
@@ -65,22 +65,3 @@ id9:asysa87503
 gpa9:1.75 
 major9:psychology 
 
-
-Firstname10:jarvis
-Lastname10:landy
-id10:ttyu8788874  
-gpa10:2.6
-major10:human-services
-
-Firstname11:lusaru
-Lastname11:dmuity
-id11:xfyu87op874  
-gpa11:2.5  
-major11:human services
-
-
-Firstname12:jerald
-Lastname12:davidson
-id12:HIJ948824
-gpa12:3
-major12:lawier
